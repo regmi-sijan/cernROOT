@@ -1,0 +1,121 @@
+void c1()
+{
+//=========Macro generated from canvas: c1/c1
+//=========  (Tue Jan 18 17:29:03 2022) by ROOT version 6.22/02
+   TCanvas *c1 = new TCanvas("c1", "c1",10,33,700,500);
+   c1->Range(-3.75,-66.28125,3.75,596.5313);
+   c1->SetFillColor(0);
+   c1->SetBorderMode(0);
+   c1->SetBorderSize(2);
+   c1->SetFrameBorderMode(0);
+   c1->SetFrameBorderMode(0);
+   
+   TH1D *h2__1 = new TH1D("h2__1","histogram from myfunc",100,-3,3);
+   h2__1->SetBinContent(31,1);
+   h2__1->SetBinContent(32,1);
+   h2__1->SetBinContent(38,1);
+   h2__1->SetBinContent(39,1);
+   h2__1->SetBinContent(40,1);
+   h2__1->SetBinContent(41,3);
+   h2__1->SetBinContent(42,6);
+   h2__1->SetBinContent(43,8);
+   h2__1->SetBinContent(44,15);
+   h2__1->SetBinContent(45,18);
+   h2__1->SetBinContent(46,10);
+   h2__1->SetBinContent(47,27);
+   h2__1->SetBinContent(48,33);
+   h2__1->SetBinContent(49,46);
+   h2__1->SetBinContent(50,60);
+   h2__1->SetBinContent(51,77);
+   h2__1->SetBinContent(52,82);
+   h2__1->SetBinContent(53,111);
+   h2__1->SetBinContent(54,135);
+   h2__1->SetBinContent(55,153);
+   h2__1->SetBinContent(56,185);
+   h2__1->SetBinContent(57,225);
+   h2__1->SetBinContent(58,278);
+   h2__1->SetBinContent(59,289);
+   h2__1->SetBinContent(60,333);
+   h2__1->SetBinContent(61,354);
+   h2__1->SetBinContent(62,369);
+   h2__1->SetBinContent(63,414);
+   h2__1->SetBinContent(64,481);
+   h2__1->SetBinContent(65,470);
+   h2__1->SetBinContent(66,471);
+   h2__1->SetBinContent(67,493);
+   h2__1->SetBinContent(68,459);
+   h2__1->SetBinContent(69,505);
+   h2__1->SetBinContent(70,450);
+   h2__1->SetBinContent(71,453);
+   h2__1->SetBinContent(72,367);
+   h2__1->SetBinContent(73,370);
+   h2__1->SetBinContent(74,331);
+   h2__1->SetBinContent(75,295);
+   h2__1->SetBinContent(76,275);
+   h2__1->SetBinContent(77,233);
+   h2__1->SetBinContent(78,201);
+   h2__1->SetBinContent(79,165);
+   h2__1->SetBinContent(80,169);
+   h2__1->SetBinContent(81,121);
+   h2__1->SetBinContent(82,114);
+   h2__1->SetBinContent(83,78);
+   h2__1->SetBinContent(84,62);
+   h2__1->SetBinContent(85,50);
+   h2__1->SetBinContent(86,40);
+   h2__1->SetBinContent(87,29);
+   h2__1->SetBinContent(88,22);
+   h2__1->SetBinContent(89,22);
+   h2__1->SetBinContent(90,11);
+   h2__1->SetBinContent(91,10);
+   h2__1->SetBinContent(92,5);
+   h2__1->SetBinContent(93,2);
+   h2__1->SetBinContent(94,2);
+   h2__1->SetBinContent(95,2);
+   h2__1->SetBinContent(96,3);
+   h2__1->SetBinContent(98,1);
+   h2__1->SetBinContent(99,2);
+   h2__1->SetEntries(10000);
+   
+   TPaveStats *ptstats = new TPaveStats(0.78,0.775,0.98,0.935,"brNDC");
+   ptstats->SetName("stats");
+   ptstats->SetBorderSize(1);
+   ptstats->SetFillColor(0);
+   ptstats->SetTextAlign(12);
+   ptstats->SetTextFont(42);
+   TText *ptstats_LaTex = ptstats->AddText("h2");
+   ptstats_LaTex->SetTextSize(0.0368);
+   ptstats_LaTex = ptstats->AddText("Entries = 10000  ");
+   ptstats_LaTex = ptstats->AddText("Mean  =  1.004");
+   ptstats_LaTex = ptstats->AddText("Std Dev   = 0.5026");
+   ptstats->SetOptStat(1111);
+   ptstats->SetOptFit(0);
+   ptstats->Draw();
+   h2__1->GetListOfFunctions()->Add(ptstats);
+   ptstats->SetParent(h2__1);
+
+   Int_t ci;      // for color index setting
+   TColor *color; // for color definition with alpha
+   ci = TColor::GetColor("#000099");
+   h2__1->SetLineColor(ci);
+   h2__1->GetXaxis()->SetLabelFont(42);
+   h2__1->GetXaxis()->SetTitleOffset(1);
+   h2__1->GetXaxis()->SetTitleFont(42);
+   h2__1->GetYaxis()->SetLabelFont(42);
+   h2__1->GetYaxis()->SetTitleFont(42);
+   h2__1->GetZaxis()->SetLabelFont(42);
+   h2__1->GetZaxis()->SetTitleOffset(1);
+   h2__1->GetZaxis()->SetTitleFont(42);
+   h2__1->Draw("");
+   
+   TPaveText *pt = new TPaveText(0.2980229,0.9341121,0.7019771,0.995,"blNDC");
+   pt->SetName("title");
+   pt->SetBorderSize(0);
+   pt->SetFillColor(0);
+   pt->SetFillStyle(0);
+   pt->SetTextFont(42);
+   TText *pt_LaTex = pt->AddText("histogram from myfunc");
+   pt->Draw();
+   c1->Modified();
+   c1->cd();
+   c1->SetSelected(c1);
+}
