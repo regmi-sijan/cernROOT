@@ -1,5 +1,10 @@
 # Let's learn ROOT
 
+## Graphs
+
+We will see in here how to explore the data using `TGraphErrors`
+
+
 
 ## File I/O
 well you can simply first open a file with "RECREATE" option and then start making al the histograms or trees that you intend to save into
@@ -35,5 +40,10 @@ This way of writing a code is much better using TTree.
 Next we can now again use the above code to interact with the data files using command lines or make another macro to interact with the data.
 Let's make one `read_ttree_from_file.C` this one here will have the concept of `TChain` to add all the data files (if it were, we only have
 one data file) which are produced by the data file, they should have very similar data file names with only differing slightly by the 
-numeric at the end. Please look into this file `read_ttree_from_file.C` for more detail
+numeric at the end. Please look into this file `read_ttree_from_file.C` for more detail.
+
+But for the advanced user: you can do `TTree::MakeSelector` it will also open up the **data file** as previous but it will create the 
+header file and a template to insert you own analysis code as well as in the form of `init()`, `process()`, `end()` methods; where `init()`
+area consists of the initializations of the histograms if you want, `process()` area is where the meat of code should be all the calculations
+your analysis that you want goes into here, and finally at the end in `end()` area you could wrap-up and `Write()` and `Close()` tasks.
 
