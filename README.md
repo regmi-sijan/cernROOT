@@ -26,3 +26,9 @@ Some of the commands that you could do:
 ```
 Once you have the `outputfile.root` you can either use above method from command lines to interact with the file or you can make
 another macro to interact with it.
+
+Because Ntuple has very limited use (it can only store **float** variables); we need similar class that should store almost any
+ROOT objects. We achieve this with the help of `TTree` class where variables are stored in their separate `branch`. Let's write one such
+program named `write_ntuple_to_file_advanced.C`
+This way of writing a code is much better using TTree.
+
