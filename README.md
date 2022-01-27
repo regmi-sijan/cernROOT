@@ -25,10 +25,15 @@ Some of the commands that you could do:
 [] cond_data->Draw("Current:Potential", "Temperature<270") // plotting with some conditions
 ```
 Once you have the `outputfile.root` you can either use above method from command lines to interact with the file or you can make
-another macro to interact with it.
+another macro to interact with it like the ones here: `read_ntuple_from_file.C`
 
+## TTree way to save and read data
 Because Ntuple has very limited use (it can only store **float** variables); we need similar class that should store almost any
 ROOT objects. We achieve this with the help of `TTree` class where variables are stored in their separate `branch`. Let's write one such
 program named `write_ntuple_to_file_advanced.C`
 This way of writing a code is much better using TTree.
+Next we can now again use the above code to interact with the data files using command lines or make another macro to interact with the data.
+Let's make one `read_ttree_from_file.C` this one here will have the concept of `TChain` to add all the data files (if it were, we only have
+one data file) which are produced by the data file, they should have very similar data file names with only differing slightly by the 
+numeric at the end. Please look into this file `read_ttree_from_file.C` for more detail
 
