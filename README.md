@@ -1,6 +1,6 @@
 # Let's learn ROOT
 
-Always remember the master of all the tutorials is the [root's official website page] (https://root.cern/). Inside this page go to the **Reference** `\to` and search your class name is top right search box. Then the result will display on the left panel. Now, click on the very beginning of the class name from the result to see it from the start and see its basic functionality and definitions.
+Always remember the master of all the tutorials is the [root's official website page](https://root.cern/). Inside this page go to the **Reference** `\to` and search your class name is top right search box. Then the result will display on the left panel. Now, click on the very beginning of the class name from the result to see it from the start and see its basic functionality and definitions.
 
 ## Graphs
 
@@ -73,6 +73,72 @@ One of the most important objects in ROOT for us. Simple construction --
 **Own Function**: many times you want to fill your histograms with the function that you defined or your theoritical model found this function.
 ```
 [] TF1 myfunc("myfunc", "gaus", 0, 3);
-[] 
+[] myfunc.SetParameters(10., 1., 0.5); // you must initialize the parameters in order to plot
+[] myfunc.Draw();
+[] TH1F h2("h2", "Histo from my function", 100, -3,3);
+[] h2.FillRandom("myfunc", 10000); // filling histo with user function entries
+[] h2.Draw();
 ```
-Gaussian has the following form ![equation](https://latex.codecogs.com/svg.image?P_0e%5E%7B%20%5Cleft(%20%20%20%5Cfrac%7Bx-P_1%7D%7BP_2%7D%20%20%20%20%20%20%5Cright)%5E2%20%20%20%7D)
+Gaussian has the following form ![equation](https://latex.codecogs.com/svg.image?P_0e%5E%7B%20%5Cleft(%20%20%20%5Cfrac%7Bx-P_1%7D%7BP_2%7D%20%20%20%20%20%20%5Cright)%5E2%20%20%20%7D). wher P0, P1, and P2 are the parameters that you need to initialize or it would have taken
+the default values in "gaus" cases; in other type of non-standard functions; parameters are not even initialized at first.
+
+## Saving the doc
+You could save your work in several formats from the canvas pop-up menu and save. If you save it in `.C` format then it will save your plot
+the way in code and how you could generate the plot with the C++ code. If you save in `.pdf` format you save it and later use it to print or
+put it on your other docs. Finally if you save in `.root` format it will save your object in the file which you can see with `TBrowser` or
+just from the command line.
+
+## TBrowser
+`[] new TBrowser` is another useful code to type in root sessions to easily navigate the files in your directories especially if the files
+are in `.root` format. You can easily visualize what objects are stored in this file. You can play around with this `TBrowser` thing as well
+double-clicking objects and drawing the plots right there is the nice ability then to come back to command line to do it. `TBrowser` gives
+power to quickly double-check the things before actually hard-coding into the command-lines.
+
+## Fitting Histograms
+One of another the most important tasks any physicists do in their careers. The file we will work here is `histogram.root` file. Open your
+`TBrowser` and double click the file and view there are two histogram already created for this tutuorial `hist1:1` and `hist2:1`.
+
+> You can see the first histogram x-axis is "gaussian" but if it was not and you need to fit this histogram what parameters will you use?
+Now if you right-click on the histgram and go to `Fit Panel` and fit with basic **Predef-1D, gaus, Chi-squared method** then you will
+see the fit line and the values of the parameters printed in the command line. Of course you could also print these parameters values in
+you plot itself using the **Options and then Fit Parameters** option settings. The fit paramters tells you if your theory (often your function) is fitting the data correctly or not? If in case you did **Landau** fit to your data, your fit would not match at all, You can try it!
+
+In you fit parameter box if your `Chi2/ndf` is close to 1 then it is getting a good fit. `Fit Panel` that we used to trying to fit the 
+histogram is okay for now; but for more complex functions you will want to always use the command line method to do this task. To do this
+similar fit using command line you could just do: `[] hist1->Fit("gaus");`
+
+> Second histogram **hist2** is pretty interesting here. The label on x-axis already says **double gaussian** this means this histogram
+has to be fit from our custom made **function** since it won't fit very good with any of the default available functions **(gaus, expo, landau, etc)**.
+````
+[] TF1 func("mydoublegaus", "gaus(0)+gaus(3)");
+  \\ gaus(0) means the same default "gaus" function whose parameters starts from 0th index
+  \\ gaus(3) means this "gaus"'s parameters starts with 3rd index; since gaus has 3 parameters
+
+[] func.SetParameters(5., 5., 1., 1., 10., 1.);  // initialize the parameters
+[] hist2->Fit("mydoublegaus");		// fit the histogram with custom function
+	\\ the above fit won't be good since the choice of parameters were deliberately chosen so
+
+[] func.SetParameters(5., 2., 1., 1., 10., 1.);
+[] hist2->Fit("mydoublegaus");  \\ should do good fit
+```
+** Internal ROOT name of the function is "mydoublegaus" and TF1 object name is "func".
+If you ever wondered how that **histogram.root** file was created in the first place; you can see the `CreateHist.C` file. Be warned you 
+won't always have the access to this kind of file in real-world; only you will get the data root files and you need to figure out the
+fitting parameters on your own.
+
+One neat trick you can do is you can save the **fitted histograms** into the same `histogram.root` file so that it would be easier for you
+to find all the histos associated with each other in the same-place. But you need command line to do this
+```
+[] TFile file1("histogram.root", "UPDATE");  // UPDATE option played the role to change the file
+[] hist2->Draw();
+[] TF1 func("user", "gaus(0)+gaus(3)");  //  remember these are values from before so maybe use up-array keys to access them
+[] func.SetParameters(5., 2., 1., 1., 10., 1.);
+[] hist2->Fit("user");
+[] hist2->Write();
+[] func->Write();  // why we need this to be saved? I am not sure
+[] file1.Close();
+```
+At the end you will see (`TBrowser`) to see; that your **hist2** has another histogram made which has the fitted curve now as well as the
+old hist2 is there. We didn't overwrite but added new histogram as well as new function into the same `histogram.root` file.
+
+
