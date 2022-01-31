@@ -110,7 +110,7 @@ similar fit using command line you could just do: `[] hist1->Fit("gaus");`
 **Second** histogram **hist2** is pretty interesting here. The label on x-axis already says **double gaussian** this means this histogram
 has to be fit from our custom made **function** since it won't fit very good with any of the default available functions **(gaus, expo, landau, etc)**.
 
-````
+```
 [] TF1 func("mydoublegaus", "gaus(0)+gaus(3)");
   \\ gaus(0) means the same default "gaus" function whose parameters starts from 0th index
   \\ gaus(3) means this "gaus"'s parameters starts with 3rd index; since gaus has 3 parameters
