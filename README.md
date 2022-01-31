@@ -98,7 +98,7 @@ power to quickly double-check the things before actually hard-coding into the co
 One of another the most important tasks any physicists do in their careers. The file we will work here is `histogram.root` file. Open your
 `TBrowser` and double click the file and view there are two histogram already created for this tutuorial `hist1:1` and `hist2:1`.
 
-> You can see the first histogram x-axis is "gaussian" but if it was not and you need to fit this histogram what parameters will you use?
+- You can see the first histogram x-axis is "gaussian" but if it was not and you need to fit this histogram what parameters will you use?
 Now if you right-click on the histgram and go to `Fit Panel` and fit with basic **Predef-1D, gaus, Chi-squared method** then you will
 see the fit line and the values of the parameters printed in the command line. Of course you could also print these parameters values in
 you plot itself using the **Options and then Fit Parameters** option settings. The fit paramters tells you if your theory (often your function) is fitting the data correctly or not? If in case you did **Landau** fit to your data, your fit would not match at all, You can try it!
@@ -107,7 +107,7 @@ In you fit parameter box if your `Chi2/ndf` is close to 1 then it is getting a g
 histogram is okay for now; but for more complex functions you will want to always use the command line method to do this task. To do this
 similar fit using command line you could just do: `[] hist1->Fit("gaus");`
 
-> Second histogram **hist2** is pretty interesting here. The label on x-axis already says **double gaussian** this means this histogram
+- Second histogram **hist2** is pretty interesting here. The label on x-axis already says **double gaussian** this means this histogram
 has to be fit from our custom made **function** since it won't fit very good with any of the default available functions **(gaus, expo, landau, etc)**.
 ````
 [] TF1 func("mydoublegaus", "gaus(0)+gaus(3)");
