@@ -1,40 +1,34 @@
 #define Analyze_cxx
+
 #include "Analyze.h"
 #include <TH2.h>
 #include <TStyle.h>
 
-// **** Definition section ****
+//******** Definition section *********
+
 void Analyze::Begin(TTree * /*tree*/)
 {
-  
+  TString option = GetOption();
 
-   TString option = GetOption();
-   TH1 *chi2Hist = NULL;
-   chi2Hist = new TH1D("chi2", "Histogram of chi2", 100, 0,20);
+  //******** Initialization section *********
 }
 
-// *** Initialization section ****
-void Analyze::SlaveBegin(TTree * /*tree*/)
-{
-}
+void Analyze::SlaveBegin(TTree *) {}
 
 Bool_t Analyze::Process(Long64_t entry)
 {
+  // Don’t delete this line! Without it the program will crash. 
+  fReader.SetEntry(entry);
 
-   fReader.SetLocalEntry(entry);
+  //******** Loop section *********
+  // You probably want GetEntry(entry) here.
 
-   // ** Loop section **
-   // You probably want GetEntry(entry) here.
-	GetEntry(entry);
-	chi2Hist->Fill(*chi2);
-
-   return kTRUE;
+  return kTRUE;
 }
 
-void Analyze::SlaveTerminate(){}
+void Analyze::SlaveTerminate() {}
 
 void Analyze::Terminate()
 {
-  // ** wrap-up section *** 
-  chi2Hist->Draw();
+  //******** Wrap-up section *********
 }

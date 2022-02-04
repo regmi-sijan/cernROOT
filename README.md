@@ -145,4 +145,102 @@ to find all the histos associated with each other in the same-place. But you nee
 At the end you will see (`TBrowser`) to see; that your **hist2** has another histogram made which has the fitted curve now as well as the
 old hist2 is there. We didn't overwrite but added new histogram as well as new function into the same `histogram.root` file.
 
+# Variables in ROOT NTuple/Trees
+The file we will be working is `experiment.root`. Open `TBrowser` and see inside of it. It has one object `tree1` with 100,000 simulated
+physics events. Obviously you can play with the file using `TBrowser` and `TreeViewer` and do interactive analysis; but you will almost 
+always required to work using **command line** and **macros** approach. I will list some of the commands you can type in command line
+to interact with this file that contains `tree` in it (macros work in same approach with little variations):
+```
+[] TFile myFile("experiment.root");		// will associate the experiment.root file to myFile root object
+[] myFile.ls();							// list what objects are inside this file
+[] tree1->Scan();						// displays a nice table of data with columns as each variables, row as each instance
+[] tree1->Print();						// will just display the branch (variable) and its data size in it
+			// we saw this tree has variables named:  event, ebeam, px, py, pz, zv, and chi2
+[] tree1->Draw("ebeam");			// to draw histogram out of any one variable (ebeam, energy of beam)
+[] tree1->Draw("ebeam:px);			// instead of plotting just one variable; try plotting two
+		// this is a scatter plot to see the correlations between two varialbes
+		// Draw() variable uses (y:x) to decide axis
+[] tree1->Draw("zv", "zv<20");			// making some cuts
+[] tree1->Draw("ebeam", "zv<20");		// cuts and plot variables can be different
+[] tree1->Draw("ebeam", "px>10 && zv<10");	// cuts using logical conditions
+```
+
+# Using C++ to analyze a Tree (using **MakeSelector**)
+This `MakeSelector` will create skeleton of an analysis class for your ntuple. First open the file `[] TFile myFile("experiment.root");`.
+Now we create an analysis macro for `tree1` with `MakeSelector`:
+```
+[] tree1->MakeSelector("tree1Analyze");		// this will create tree1Analyze.C and tree1Analyze.h files
+```
+You can look into these two files using `$ less tree1Analyze.h` and `$ less tree1Analyze.C`. If we take a closer look into this analysis code,
+it has at least following **methods**. 
+- **Definition**: defines the variables we are going to use
+- **Initialization**: open files to save the analysis work, create histograms, etc
+- **Loop**: for each event in ntuple or tree perform some tasks: calculate values, apply cuts, fill histogram, etc
+- **wrap-up**: display results, save histograms, etc
+You can see `Analyze.C` and `Analyze.h` files created after we did `MakeSelector` thing on *tree1* object. These files has been trimmed
+a little to see it more clearly and comments are there where to put the relevant pieces of codes that we discussed earlier.
+
+To run this analysis macro, you could do the following:
+```
+[] TFile myFile("experiment.root");		// loading up the experiment.root file
+[] tree1->Process("Analyze.C");		// load Analyze.C and run it analysis code on the contents of the tree
+```
+`Process` will basically do the following:
+- load your definitions
+- execute your initializations
+- execute the loop code for each entry in the tree
+- execute your wrap-up code
+
+Let's see how we can edit the skeleton created by `MakeSelector` to use as per our analysis job. I will list the steps you can edit the
+`Analyze.C` file and save it as `newAnalyze.C` maybe:
+
+In the **definiton** section; `TH1 *chi2Hist = NULL;`
+
+In the **initialization** section:  ` chi2Hist = new TH1D("chi2", "Histogram of Chi2", 100, 0, 20);`
+
+In the **loop** section:  `GetEntry(entry);` and `chi2Hist->Fill(*chi2);`
+	// the first code says "get an entry from the tree (get each row)". This line will assign values to variables defined in ntuple:
+	*ebeam, *chi2, and so on. The variables extracted (using MakeSelector) from ntuple are pointer and so they need to have prefix 
+	of * to access their values. In second code, it says in the histogram `chi2Hist` add 1 to a bin that correspond to the value of 
+	`*chi2`.
+
+In the **wrap-up** section:   `chi2Hist->Draw();`
+
+Once you saved this file and now to run it:
+```
+[] TFile myFile("experiment.root");
+[] tree1->Process("newAnalyze.C");
+```
+
+This is how we make histogram with a C++ analysis macro. In the initialization section, we defined a histogram; in the loop section, we
+filled the histogram with values; in the wrap-up section, we drew the histogram.
+
+To put the x-axis, y-axis and title label for the histogram:
+```
+chi2Hist->GetXaxis()->SetTitle("chi2");
+chi2Hist->GetYaxis()->SetTitle("number of events");
+```
+
+## Calculate your own variable
+Sometime you might want to calculate your own variables like `pt`. Let's see the steps:
+```
+[] tree1->MakeSelector("AnalyzeVariables");		// start frest analysis skeleton
+	// In Process section put this
+Double_t pt = TMath::Sqrt( (*px)*(*px) + (*py)*(*py)  );
+```
+The nexts steps are to now create the histogram tha can save this variable and and save it. To see the bin range you can "cheat" by typying
+the following in interactive mode `tree1->Draw("sqrt(px*px + py*py));`
+You could also make another histogram of `theta`. using `TMath::ATan2(y,x);` which will compute the arctangent of y/x.
+
+## applying cuts in your analysis macro
+if we needed to find the number of events when `pz` is less than 145 GeV, then we could do the following:
+```
+Int_t pzCount = 0;				// in the definition section
+if ( (*pz) < 145  )				// in process section
+{
+	pzCount = pzCount + 1;
+}
+
+std::cout << "The number of events with pz < 145 is " << pzCount << std::endl;			// in wrap-up section
+```
 
