@@ -145,6 +145,18 @@ to find all the histos associated with each other in the same-place. But you nee
 At the end you will see (`TBrowser`) to see; that your **hist2** has another histogram made which has the fitted curve now as well as the
 old hist2 is there. We didn't overwrite but added new histogram as well as new function into the same `histogram.root` file.
 
+### Fitting Sub Ranges:
+By default, `TH1::Fit` will fit the function to the defined whole histogram range. We can do the option `"R"` as second parameter of the `Fit`
+to restrict the fit range and to just fit the range defined in `TF1` constructor. Lets see one example
+```
+[] TF1 *f1 = new TF1("f1", "[0]*x*sin([1]*x)", -3, 3);		// this function extends from -3 to 3, also do setparameters
+[] hist->Fit("f1", "R")  		// option R restricts the fit range
+```
+Either you could have done above way to restrict the fit range or you could do the following:
+```
+[] hist->Fit("f1", "", "", -3., 3.);   // this should fit the histogram to range -3, 3
+```
+
 # Variables in ROOT NTuple/Trees
 The file we will be working is `experiment.root`. Open `TBrowser` and see inside of it. It has one object `tree1` with 100,000 simulated
 physics events. Obviously you can play with the file using `TBrowser` and `TreeViewer` and do interactive analysis; but you will almost 
