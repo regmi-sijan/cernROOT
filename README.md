@@ -1,6 +1,6 @@
 # Let's learn ROOT
 
-Always remember the master of all the tutorials is the [root's official website page](https://root.cern/). Inside this page go to the **Reference** `\to` and search your class name is top right search box. Then the result will display on the left panel. Now, click on the very beginning of the class name from the result to see it from the start and see its basic functionality and definitions.
+Always remember the master of all the tutorials for the ROOT is the [root's official website page](https://root.cern/). Inside this page go to the **Reference**, and search your class name is top right search box. Then the result will display on the left panel. Now, click on the very beginning of the class name from the result to see it from the start and see its basic functionality and definitions.
 
 ## Graphs
 
@@ -9,9 +9,9 @@ We will see in here how to explore the data using `TGraphErrors`
 
 
 ## File I/O
-well you can simply first open a file with "RECREATE" option and then start making al the histograms or trees that you intend to save into
+Well you can simply first open a file with "RECREATE" option and then start making all the histograms or trees that you intend to save into
 the file that you have created earlier. Finally, do `outFileName.Write()` it should write all the objects that you have created since
-opening the outfile at the beginning. Now you can close the outfile as `outFileName.Close()`
+opening the outfile at the beginning. Now you can close the outfile as `outFileName.Close()`.
 
 ## N-tuples in ROOT
 A ROOT TNtuple object can store rows of **float** entries. From the documentation I can see that TNtuple can be created via
@@ -49,7 +49,7 @@ header file and a template to insert you own analysis code as well as in the for
 area consists of the initializations of the histograms if you want, `process()` area is where the meat of code should be all the calculations
 your analysis that you want goes into here, and finally at the end in `end()` area you could wrap-up and `Write()` and `Close()` tasks.
 
-# ROOT Workshop from nevis.columbia.edu website
+## ROOT Workshop from nevis.columbia.edu website
 
 The above [website](https://www.nevis.columbia.edu/~seligman/root-class/) has tons of other links [Unix](http://www.ee.surrey.ac.uk/Teaching/Unix/), [another UNIX](https://www.tutorialspoint.com/unix/index.htm).
 
@@ -256,3 +256,16 @@ if ( (*pz) < 145  )				// in process section
 std::cout << "The number of events with pz < 145 is " << pzCount << std::endl;			// in wrap-up section
 ```
 
+# Some useful programming clips:
+
+## To make a histograms array using the for loop
+1D-array of histograms:
+```cpp
+for (int i=0; i<96; i++)
+{
+  TString a;
+  a.Form("%d", i);
+  TString b = "eta_"+ a;
+  eta_hist[i] = new TH1F(b.Data(), "eta histogram", 70, 0.0, 0.7); // eta_hist already defined in class header
+}
+```
