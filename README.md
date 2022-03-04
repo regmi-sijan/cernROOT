@@ -256,16 +256,34 @@ if ( (*pz) < 145  )				// in process section
 std::cout << "The number of events with pz < 145 is " << pzCount << std::endl;			// in wrap-up section
 ```
 
-# Some useful programming clips:
+# Some useful programming clips (for me):
 
 ## To make a histograms array using the for loop
 1D-array of histograms:
 ```cpp
+TH1F *eta_hist[96];	// histogram array defined ususally in class header file
 for (int i=0; i<96; i++)
 {
   TString a;
-  a.Form("%d", i);
-  TString b = "eta_"+ a;
-  eta_hist[i] = new TH1F(b.Data(), "eta histogram", 70, 0.0, 0.7); // eta_hist already defined in class header
+  a.Form("%d", i);	// a=i
+  TString b = "eta_"+ a; // b=eta_i
+  eta_hist[i] = new TH1F(b.Data(), "eta histogram", 70, 0.0, 0.7);  // array instantiated
+}
+```
+
+2D-array of histograms: histo is still 1D, but array is 2D:
+```cpp
+TH1F *hist_eta_and_phi[96][258]; // ususally in class header file
+for(int i=0; i<96; i++)
+{
+  for(int j=0; j<258; j++)
+  {
+    TString i1;	// i1 counts eta rows
+    TString j1; // j1 counts phi cols
+    i1.Form("%d", i);	// i1=i
+    j1.Form("%d", j);	// j1=j
+    TString hist_name = "emc_ieta" + i1 + "_phi" + j1;
+    hist_eta_and_phi[i][j] = new TH1F(hist_name.Data(), "Histo of eta and phi", 70, 0.0, 0.7);
+  }
 }
 ```
