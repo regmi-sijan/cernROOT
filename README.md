@@ -11,9 +11,7 @@ Always remember the master of all the tutorials for the ROOT is the [root's offi
 
 ## Graphs
 
-We will see in here how to explore the data using `TGraphErrors`
-
-
+For `TGraphError` examples; see `tgraph_tut*.C`.
 
 ## File I/O
 Well you can simply first open a file with "RECREATE" option and then start making all the histograms or trees that you intend to save into
