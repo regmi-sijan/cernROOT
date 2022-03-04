@@ -2,6 +2,13 @@
 
 Always remember the master of all the tutorials for the ROOT is the [root's official website page](https://root.cern/). Inside this page go to the **Reference**, and search your class name is top right search box. Then the result will display on the left panel. Now, click on the very beginning of the class name from the result to see it from the start and see its basic functionality and definitions.
 
+## List of References:
+1. [nevis.columbia.edu](https://www.nevis.columbia.edu/~seligman/root-class/)
+2. [Julie Roche, OU](https://inpp.ohio.edu/~rochej/group_page/tips/root_tutorial.html)
+3. [cern Twiki](https://twiki.cern.ch/twiki/bin/view/Main/ROOTLaPlataTutorial#Working_with_Histograms_slides)   go to the top of the page to start
+4. [desy Indico](https://indico.desy.de/event/8607/sessions/9122/attachments/58083/70538/ROOT_DESY2013.pdf)
+5. [one more tutorial](https://indico.scc.kit.edu/event/26/contributions/1297/attachments/863/1248/ROOT_Gridka.pdf)
+
 ## Graphs
 
 We will see in here how to explore the data using `TGraphErrors`
