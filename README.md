@@ -2,6 +2,8 @@
 
 Always remember the master of all the tutorials for the ROOT is the [root's official website page](https://root.cern/). Inside this page go to the **Reference**, and search your class name is top right search box. Then the result will display on the left panel. Now, click on the very beginning of the class name from the result to see it from the start and see its basic functionality and definitions.
 
+> Everything I have in this repo are the compilations from several sources. These notes are just made so we can come here at single area if we need to know about ROOT programming concepts.
+
 ## List of References:
 1. [nevis.columbia.edu](https://www.nevis.columbia.edu/~seligman/root-class/)
 2. [Julie Roche, OU](https://inpp.ohio.edu/~rochej/group_page/tips/root_tutorial.html)
@@ -14,9 +16,12 @@ Always remember the master of all the tutorials for the ROOT is the [root's offi
 For `TGraphError` examples; see `tgraph_tut*.C`.
 
 ## File I/O
+**First method to save objects into the file (one Write() saves all):**
 Well you can simply first open a file with "RECREATE" option and then start making all the histograms or trees that you intend to save into
 the file that you have created earlier. Finally, do `outFileName.Write()` it should write all the objects that you have created since
 opening the outfile at the beginning. Now you can close the outfile as `outFileName.Close()`.
+
+**second method to save objects into the file (individual Write() needed)**: Another way to save root objects to the file is to `Write()` individual objects into the file. Like, let's say you have *histogram, tree, TF1* objects, then you can save only histo and TF1 by individually writing them to the file and finally closing the file, of course.
 
 ## N-tuples in ROOT
 A ROOT TNtuple object can store rows of **float** entries. From the documentation I can see that TNtuple can be created via
@@ -162,7 +167,7 @@ Either you could have done above way to restrict the fit range or you could do t
 [] hist->Fit("f1", "", "", -3., 3.);   // this should fit the histogram to range -3, 3
 ```
 
-# Variables in ROOT NTuple/Trees
+## Variables in ROOT NTuple/Trees
 The file we will be working is `experiment.root`. Open `TBrowser` and see inside of it. It has one object `tree1` with 100,000 simulated
 physics events. Obviously you can play with the file using `TBrowser` and `TreeViewer` and do interactive analysis; but you will almost 
 always required to work using **command line** and **macros** approach. I will list some of the commands you can type in command line
@@ -182,7 +187,7 @@ to interact with this file that contains `tree` in it (macros work in same appro
 [] tree1->Draw("ebeam", "px>10 && zv<10");	// cuts using logical conditions
 ```
 
-# Using C++ to analyze a Tree (using **MakeSelector**)
+## Using C++ to analyze a Tree (using **MakeSelector**)
 This `MakeSelector` will create skeleton of an analysis class for your ntuple. First open the file `[] TFile myFile("experiment.root");`.
 Now we create an analysis macro for `tree1` with `MakeSelector`:
 ```
@@ -262,8 +267,9 @@ std::cout << "The number of events with pz < 145 is " << pzCount << std::endl;		
 ```
 
 # Some useful programming clips (for me):
+---
 
-## To make a histograms array using the for loop
+## To make the histograms array using the for loop
 1D-array of histograms:
 ```cpp
 TH1F *eta_hist[96];	// histogram array defined ususally in class header file
