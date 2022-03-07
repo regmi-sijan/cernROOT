@@ -299,7 +299,7 @@ for(int i=0; i<96; i++)
 }
 ```
 
-(*very specific to my environment*)
+(*very specific to my environment*)  obtained from `tutorials/AnaTutorial/src/AnaTutorial.cc`
 ## To get the **vertex**
 ```cpp
 /// Get the global vertex to determine the appropriate pseudorapidity of the clusters
