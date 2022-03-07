@@ -2,7 +2,7 @@
 
 Always remember the master of all the tutorials for the ROOT is the [root's official website page](https://root.cern/). Inside this page go to the **Reference**, and search your class name is top right search box. Then the result will display on the left panel. Now, click on the very beginning of the class name from the result to see it from the start and see its basic functionality and definitions.
 
-> Everything I have in this repo are the compilations from several sources. These notes are just made so we can come here at single area if we need to know about ROOT programming concepts.
+> Everything I have in this repo are the compilations from several sources. These notes are just made so I could come here at single area if I need to know about ROOT programming concepts, syntax.
 
 ## List of References:
 1. [nevis.columbia.edu](https://www.nevis.columbia.edu/~seligman/root-class/)
