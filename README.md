@@ -266,7 +266,7 @@ if ( (*pz) < 145  )				// in process section
 std::cout << "The number of events with pz < 145 is " << pzCount << std::endl;			// in wrap-up section
 ```
 
-# Some useful programming clips (for me):
+# Some useful programming clips (for my works related):
 ---
 
 ## To make the histograms array using the for loop
@@ -298,3 +298,93 @@ for(int i=0; i<96; i++)
   }
 }
 ```
+
+(*very specific to my environment*)
+## To get the **vertex**
+```cpp
+/// Get the global vertex to determine the appropriate pseudorapidity of the clusters
+  GlobalVertexMap *vertexmap = findNode::getClass<GlobalVertexMap>(topNode, "GlobalVertexMap");
+  if (!vertexmap)
+  {
+    cout << "AnaTutorial::getEmcalClusters - Fatal Error - GlobalVertexMap node is missing. Please turn on the do_global flag in the main macro in order to reconstruct the global vertex." << endl;
+    assert(vertexmap);  // force quit
+
+    return;
+  }
+  if (vertexmap->empty())
+  {
+    cout << "AnaTutorial::getEmcalClusters - Fatal Error - GlobalVertexMap node is empty. Please turn on the do_global flag in the main macro in order to reconstruct the global vertex." << endl;
+    return;
+  }
+
+  GlobalVertex *vtx = vertexmap->begin()->second;
+  if (vtx == nullptr)
+    return;
+    
+  CLHEP::Hep3Vector vertex(vtx->get_x(), vtx->get_y(), vtx->get_z());
+```
+
+
+## To get the **RawCluster(s)** and looping on the cluster(s) collection:
+```cpp
+// get one of the cluster nodes to obtain the cluster container
+RawClusterContainer *clusters = findNode::getClass<RawClusterContainer>(topNode, "CLUSTER_CEMC");
+
+// check if this object is opened correctly
+  if (!clusters)
+  {
+    cout << PHWHERE
+         << "EMCal cluster node is missing, can't collect EMCal clusters"
+         << endl;
+    return;
+  }
+  
+  // setting up to iterate over the cluster(s) obtained from above
+  RawClusterContainer::ConstRange begin_end = clusters->getClusters();
+  RawClusterContainer::ConstIterator clusIter;
+  
+  // now loop over the EMCal cluster(s)
+  for (clusIter = begin_end.first;
+       clusIter != begin_end.second;
+       ++clusIter)
+  {
+     // get the cluster
+     const RawCluster *cluster = clusIter->Second;
+     
+     /// Get cluster characteristics
+    /// This helper class determines the photon characteristics
+    /// depending on the vertex position
+    /// This is important for e.g. eta determination and E_T determination
+    CLHEP::Hep3Vector vertex(vtx->get_x(), vtx->get_y(), vtx->get_z());
+    CLHEP::Hep3Vector E_vec_cluster = RawClusterUtility::GetECoreVec(*cluster, vertex);
+    m_clusenergy = E_vec_cluster.mag();
+    m_cluseta = E_vec_cluster.pseudoRapidity();
+    m_clustheta = E_vec_cluster.getTheta();
+    m_cluspt = E_vec_cluster.perp();
+    m_clusphi = E_vec_cluster.getPhi();
+
+    if (m_cluspt < m_mincluspt)
+      continue;
+
+    m_cluspx = m_cluspt * cos(m_clusphi);
+    m_cluspy = m_cluspt * sin(m_clusphi);
+    m_cluspz = sqrt(m_clusenergy * m_clusenergy - m_cluspx * m_cluspx - m_cluspy * m_cluspy);
+
+    //fill the cluster tree with all emcal clusters
+    m_clustertree->Fill();
+  
+  // to see what's in m_clustertree columns
+  
+  m_clustertree = new TTree("clustertree", "A tree with emcal clusters");
+  m_clustertree->Branch("m_clusenergy", &m_clusenergy, "m_clusenergy/D");
+  m_clustertree->Branch("m_cluseta", &m_cluseta, "m_cluseta/D");
+  m_clustertree->Branch("m_clustheta", &m_clustheta, "m_clustheta/D");
+  m_clustertree->Branch("m_cluspt", &m_cluspt, "m_cluspt/D");
+  m_clustertree->Branch("m_clusphi", &m_clusphi, "m_clusphi/D");
+  m_clustertree->Branch("m_cluspx", &m_cluspx, "m_cluspx/D");
+  m_clustertree->Branch("m_cluspy", &m_cluspy, "m_cluspy/D");
+  m_clustertree->Branch("m_cluspz", &m_cluspz, "m_cluspz/D");
+  m_clustertree->Branch("m_E_4x4", &m_E_4x4, "m_E_4x4/D");
+ }  
+```
+
