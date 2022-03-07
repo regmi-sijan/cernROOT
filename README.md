@@ -66,7 +66,7 @@ The above [website](https://www.nevis.columbia.edu/~seligman/root-class/) has to
 ## Plotting a Function:
 
 ```
-[] TF1 f1("f1", "sin(x)/x", 0., 10.);    // here "f1" I kept same for root object as well as object name
+[] TF1 f1("f1", "sin(x)/x", 0., 10.);    // here the f1 is object name; "f1" is the root name. Keeping it same makes it lot simpler to track them
 [] f1.Draw();
 ```
 The canvas will pop up with the function plotted with default settings. You can always edit the plots from GUI once the
