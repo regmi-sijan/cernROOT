@@ -166,6 +166,29 @@ Either you could have done above way to restrict the fit range or you could do t
 ```
 [] hist->Fit("f1", "", "", -3., 3.);   // this should fit the histogram to range -3, 3
 ```
+### Fitting Multiple Sub Ranges
+Here, let's see how to Fit a histogram with several Gaussian functions:
+
+First let's define four `TF1` functions - giving its range to fit as well.
+```
+TF1 *g1 = new TF1("g1", "gaus", 85, 95);
+TF1 *g2 = new TF1("g2", "gaus", 98, 108);
+TF1 *g3 = new TF1("g3", "gaus", 110, 121);
+
+// now let's add to fit the total range
+TF1 *total = new TF1("total", "gaus(0)+gaus(3)+gau(6)", 85, 125);
+```
+In this complicated case of the sum of 3 Gaussian functions, we also require to give the initial parameters. We could have used our own come up parameters, but here initial parameters are taken from the result of the individual fits.
+```
+// Fit each function and add it to the list of functions.
+h->Fit(g1, "R");
+
+```
+
+
+
+
+
 
 ## Variables in ROOT NTuple/Trees
 The file we will be working is `experiment.root`. Open `TBrowser` and see inside of it. It has one object `tree1` with 100,000 simulated
