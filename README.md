@@ -182,7 +182,19 @@ In this complicated case of the sum of 3 Gaussian functions, we also require to 
 ```
 // Fit each function and add it to the list of functions.
 h->Fit(g1, "R");
+h->Fit(g2, "R+");
+h->Fit(g3, "R+");
 
+Double_t par[9]; // array to hold the parameters from the Fit
+
+// Get the parameters from the fit
+g1->GetParameters(&par[0]);
+g2->GetParameters(&par[3]);
+g3->GetParameters(&par[6]);
+
+// use these parameters on the sum
+total->SetParameters(par);
+h->Fit(total, "R+");
 ```
 
 
