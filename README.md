@@ -38,7 +38,7 @@ Some of the commands that you could do:
 [] .ls   // should show you quickly what objects this fil have
 [] cond_data->Print();		// checking what are variables names and dtypes
 [] cond_data->Scan();
-[] cond_data->Draw("Current:Potential);  // doing some action/analysis
+[] cond_data->Draw("Current:Potential");  // doing some action/analysis
 [] cond_data->Draw("Current:Potential", "Temperature<270") // plotting with some conditions
 ```
 Once you have the `outputfile.root` you can either use above method from command lines to interact with the file or you can make
