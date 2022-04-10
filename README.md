@@ -66,6 +66,7 @@ Start by first creating the `TFile`, then you can `cd()` into it and make direct
 TFile *file = new TFile("myfile.root", "RECREATE");
 ```
 Then, see the Figure below:
+
 ![alt text](https://github.com/sbdrchauhan/cernROOT/blob/master/images/mkdir_into_TFile.png)
 
 ## ROOT Workshop from nevis.columbia.edu website
@@ -75,7 +76,8 @@ The above [website](https://www.nevis.columbia.edu/~seligman/root-class/) has to
 ## Plotting a Function:
 
 ```
-[] TF1 f1("f1", "sin(x)/x", 0., 10.);    // here the f1 is object name; "f1" is the root name. Keeping it same makes it lot simpler to track them
+[] TF1 f1("f1", "sin(x)/x", 0., 10.); // here the f1 is object name; also "f1" is the root name. 
+				      // Keeping both the names same makes it lot simpler to track them
 [] f1.Draw();
 ```
 The canvas will pop up with the function plotted with default settings. You can always edit the plots from GUI once the
