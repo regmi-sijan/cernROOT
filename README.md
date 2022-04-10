@@ -10,6 +10,7 @@ Always remember the master of all the tutorials for the ROOT is the [root's offi
 3. [cern Twiki](https://twiki.cern.ch/twiki/bin/view/Main/ROOTLaPlataTutorial#Working_with_Histograms_slides)   go to the top of the page to start
 4. [desy Indico](https://indico.desy.de/event/8607/sessions/9122/attachments/58083/70538/ROOT_DESY2013.pdf)
 5. [one more tutorial](https://indico.scc.kit.edu/event/26/contributions/1297/attachments/863/1248/ROOT_Gridka.pdf)
+6. [18 pages pdf](https://agnieszkamucha.github.io/ParticlePhysics/Files/Tutorial-ROOT.pdf)
 
 ## Graphs
 
@@ -58,6 +59,14 @@ But for the advanced user: you can do `TTree::MakeSelector` it will also open up
 header file and a template to insert you own analysis code as well as in the form of `init()`, `process()`, `end()` methods; where `init()`
 area consists of the initializations of the histograms if you want, `process()` area is where the meat of code should be all the calculations
 your analysis that you want goes into here, and finally at the end in `end()` area you could wrap-up and `Write()` and `Close()` tasks.
+
+## How to make directories inside a TFile object?
+Start by first creating the `TFile`, then you can `cd()` into it and make directories as many as you want for various types of objects that you will save later. The best way maybe is to first layout the file directory system with all the directories (or subdirectories) that you will want to use in later part of the program. Then, when you start saving `Write()` your objects, firt cd into the respective directory and then do `Write()` thing. In the example below, we first create a `TFile` object named `file` as:
+```cpp
+TFile *file = new TFile("myfile.root", "RECREATE");
+```
+Then, see the Figure below:
+![alt text](https://github.com/sbdrchauhan/cernROOT/blob/master/images/mkdir_into_TFile.png)
 
 ## ROOT Workshop from nevis.columbia.edu website
 
