@@ -434,3 +434,30 @@ RawClusterContainer *clusters = findNode::getClass<RawClusterContainer>(topNode,
  }  
 ```
 
+## How to flatten two dimensional array into one dimensional array?
+```cpp
+// Example program
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+  int two_d_array[2][3] = {{1,2,3}, {4,5,6}};
+  int one_d_array[6];
+  for (int i=0; i<2; i++) // iterate row
+  {
+      for (int j=0; j<3; j++)
+      {
+        one_d_array[i*3+j] = two_d_array[i][j];	// this is the most imp. line
+      }
+  }
+  
+  for (int i=0; i<6; i++)
+  {
+      cout << one_d_array[i];
+  }
+}
+// output: 123456
+```
+
