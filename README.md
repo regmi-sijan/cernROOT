@@ -445,11 +445,11 @@ int main()
 {
   int two_d_array[2][3] = {{1,2,3}, {4,5,6}};
   int one_d_array[6];
-  for (int i=0; i<2; i++) // iterate row
+  for (int row=0; row<2; row++) // i :iterate row
   {
-      for (int j=0; j<3; j++)
+      for (int col=0; col<3; col++) // j :iterate col
       {
-        one_d_array[i*3+j] = two_d_array[i][j];	// this is the most imp. line
+        one_d_array[row*3+col] = two_d_array[row][col];
       }
   }
   
