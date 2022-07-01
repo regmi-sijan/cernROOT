@@ -460,7 +460,7 @@ int main()
 }
 // output: 123456
 ```
-### How to make patterns of shifts for the detector and applied it so that to see if our calibration codes can recover it or not?
+## How to make patterns of shifts for the detector and applied it so that to see if our calibration codes can recover it or not?
 ```cpp
 void pattern()
 {
