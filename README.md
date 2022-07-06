@@ -465,32 +465,37 @@ int main()
 void pattern()
 {
     TH2F *hist = new TH2F("h", "", 96,0,96, 256,0,256);
-    for (int i=0; i<96; i++)	// i refers to eta positions
+    
+    for (int i=0; i<96; i++)
     {
-        for (int j=0; j<256; j++)	// j refers to phi positions
+        for (int j=0; j<256; j++)
         {
-            float e = 1.00;	// initialize energy e to 1.00
-            int ir = -999;	// ir means repeating pattern in eta after ir steps
-            int jr = -999;	// jr means repeating pattern in phi after jr steps
-	    
-	    // after every 8 eta blocks, our pattern is different completely
+            float e = 1.00;
+            int ir = -999;
+            int jr = -999;
             if ( (i>=8 && i<16) || (i>=24 && i<32) || (i>=40 && i<48) ||
               (i>=56 && i<64) || (i>=72 && i<80) || (i>=88 && i<96) )
             {
-                ir = i%6;
-                jr = j%6;
+                ir = i%4;
+                jr = j%4;
+               
+                e *= 0.86+ir*0.025+jr*0.025;
+
             }
             else
             {
                 int ib2 = i/2;
-                ir = ib2%6;
+                ir = ib2%4;
                 int jb2 = j/2;
-                jr = jb2%6;
+                jr = jb2%8;
+
+                e *= 0.86+ir*0.030+jr*0.030;
             }
-            e *= 0.86+ir*0.03+jr*0.03;
-            hist->SetBinContent(i+1, j+1, e); // saving into 2D histo
+
+           // e *= 0.86+ir*0.03+jr*0.03;
+            hist->SetBinContent(i+1, j+1, e);
         }
     }
-    hist->Draw("colz");	  // drawing "colz" option of 2D histo
+    hist->Draw("colz");
 }
 ```
