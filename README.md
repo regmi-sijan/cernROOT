@@ -11,6 +11,7 @@ Always remember the master of all the tutorials for the ROOT is the [root's offi
 4. [desy Indico](https://indico.desy.de/event/8607/sessions/9122/attachments/58083/70538/ROOT_DESY2013.pdf)
 5. [one more tutorial](https://indico.scc.kit.edu/event/26/contributions/1297/attachments/863/1248/ROOT_Gridka.pdf)
 6. [18 pages pdf](https://agnieszkamucha.github.io/ParticlePhysics/Files/Tutorial-ROOT.pdf)
+7. [root manual - from cern page](https://root.cern/manual/)
 
 ## Graphs
 
