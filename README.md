@@ -232,6 +232,13 @@ to interact with this file that contains `tree` in it (macros work in same appro
 [] tree1->Draw("zv", "zv<20");			// making some cuts
 [] tree1->Draw("ebeam", "zv<20");		// cuts and plot variables can be different
 [] tree1->Draw("ebeam", "px>10 && zv<10");	// cuts using logical conditions
+
+// We can specify temporary histogram, set the x range and plot one variables constraining on other variables
+[] tree->Draw("_clusterEnergies>>h_e(40, 0., 4.)", "_clusterEtas>0.8 && _clusterEtas<0.9") // eta ~+1
+```
+**quick-tip** To select just the 50 files from about 500 root files in xaa split file, you can do this:
+```
+head -50 xaa>xaa_first_50.txt // work with this small file to analysis quickly
 ```
 
 ## Using C++ to analyze a Tree (using **MakeSelector**)
