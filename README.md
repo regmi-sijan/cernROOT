@@ -511,3 +511,48 @@ void pattern()
     hist->Draw("colz");
 }
 ```
+
+## How to manipulate TTree branches/variables/columns in root terminal fast and easy, with lots of root files TTree combined?
+```bash
+// first we need to have the list of files to be read
+// this list in my case is in the filepath to my advisor dir
+// so let's say I have file xaa_first50.txt that contains path
+// to first 50 root files. All have same TTree called "_eventTree"
+// need to TChain and read them all in root terminal:
+// I use C++ functions to read file and then use TChain to add them all:
+
+[] ifstream inFile; 
+[] inFile.open("xaa_first50.txt", ios::in);  // open file in read mode
+[] TChain *pitree = new TChain("_eventTree");	// TChain obj to later use
+[] string root_file;
+[] while (std::getline(inFile, root_file)) {  pitree->Add(root_file.c_str()); }
+
+// after adding, now pitree is basically your original tree with all data added
+
+[] pitree->Draw("_clusterEtas", "_clusterPts>0.9") // drawing etas distribution with condition
+
+// drawing and saving the histogram with new name so you can access it in terminal again
+[] pitree->Draw("_clusterEtas>>h1(100, -1.5, 1.5)", "_clusterPts>0.6");
+
+// another but with different cuts
+[] pitree->Draw("_clusterEtas>>h2(100, -1.5, 1.5)", "_clusterPts>0.9");
+
+// now let's multiply these two h1 and h2 histogram and save it to h3 , later draw h3
+// first need to create h3, making same bins number and ranges
+[] TH1F *h3 = new TH1F("h3", "h1(pt>0.6)*h2(pt>0.9)", 100, -1.5, 1.5);
+[] for (int i=1; i<h1->GetNbinsX()+1; i++) {  h3->SetBinContent(i, h1->GetBinContent(i)*h2->GetBinContent(i));  }
+[] h3->Draw();
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
